@@ -144,11 +144,10 @@ def create_fastapi_app() -> FastAPI:
 def run_app(fastapi_app: FastAPI):
     uvicorn.run(fastapi_app, host="0.0.0.0", port=8000)
 
-
+app = create_fastapi_app()  
 if __name__ == "__main__":
     # Create database tables on startup
     create_tables()
 
     # Create and run FastAPI application
-    app = create_fastapi_app()
     run_app(app)
