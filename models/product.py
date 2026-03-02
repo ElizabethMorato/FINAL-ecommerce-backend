@@ -32,8 +32,9 @@ class ProductModel(BaseModel):
 
     name = Column(String, index=True)
     price = Column(Float, index=True)
-    stock = Column(Integer, default=0, nullable=False, index=True)  # ✅ Added index
+    stock = Column(Integer, default=0, nullable=False, index=True)
     category_id = Column(Integer, ForeignKey('categories.id_key'), index=True)
+    image_url = Column(String, nullable=True)  # URL de imagen del producto
 
     category = relationship(
         'CategoryModel',
