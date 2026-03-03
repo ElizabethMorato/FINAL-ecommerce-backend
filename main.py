@@ -90,12 +90,12 @@ def create_fastapi_app() -> FastAPI:
     logger.info("✅ Request ID middleware enabled (distributed tracing)")
 
     # CORS Configuration
-    cors_origins = os.getenv("CORS_ORIGINS", "*").split(",")
-    allow_all = cors_origins == ["*"]
+    # CORS Configuration
+    cors_origins = os.getenv("CORS_ORIGINS", "http://localhost:5500").split(",")
     fastapi_app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"] if allow_all else cors_origins,
-        allow_credentials=False if allow_all else True,  # credentials=True requiere origin explícito
+        allow_origins=cors_origins,
+        allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
