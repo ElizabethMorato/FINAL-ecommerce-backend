@@ -91,10 +91,11 @@ def create_fastapi_app() -> FastAPI:
 
     # CORS Configuration
     cors_origins = os.getenv("CORS_ORIGINS", "*").split(",")
+    allow_all = cors_origins == ["*"]
     fastapi_app.add_middleware(
         CORSMiddleware,
-        allow_origins=cors_origins if cors_origins != ["*"] else ["*"],
-        allow_credentials=True,
+        allow_origins=["*"] if allow_all else cors_origins,
+        allow_credentials=False if allow_all else True,  # credentials=True requiere origin explícito
         allow_methods=["*"],
         allow_headers=["*"],
     )
