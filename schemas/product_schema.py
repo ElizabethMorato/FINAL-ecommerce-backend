@@ -5,7 +5,6 @@ from pydantic import Field
 from schemas.base_schema import BaseSchema
 
 if TYPE_CHECKING:
-    from schemas.category_schema import CategorySchema
     from schemas.order_detail_schema import OrderDetailSchema
     from schemas.review_schema import ReviewSchema
 
@@ -18,7 +17,9 @@ class ProductSchema(BaseSchema):
     stock: int = Field(default=0, ge=0, description="Product stock quantity (must be >= 0)")
     category_id: int = Field(..., description="Category ID reference (required)")
     image_url: Optional[str] = Field(default=None, description="Product image URL (optional)")
+    description: Optional[str] = Field(default=None, max_length=2000, description="Product description (optional)")
+    color: Optional[str] = Field(default=None, max_length=100, description="Product color (optional)")
 
-    category: Optional['CategorySchema'] = None
+    # Removido: category 
     reviews: Optional[List['ReviewSchema']] = []
     order_details: Optional[List['OrderDetailSchema']] = []

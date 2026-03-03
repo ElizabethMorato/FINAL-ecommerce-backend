@@ -35,6 +35,8 @@ class ProductModel(BaseModel):
     stock = Column(Integer, default=0, nullable=False, index=True)
     category_id = Column(Integer, ForeignKey('categories.id_key'), index=True)
     image_url = Column(String, nullable=True)  # URL de imagen del producto
+    description = Column(String, nullable=True) # Descripción del producto
+    color = Column(String, nullable=True)        # Color del producto
 
     category = relationship(
         'CategoryModel',
