@@ -87,14 +87,15 @@ def create_fastapi_app() -> FastAPI:
     # Add middleware (LIFO order - last added runs first)
     # Request ID middleware runs FIRST (innermost) to capture all logs
     fastapi_app.add_middleware(RequestIDMiddleware)
-    logger.info("✅ Request ID middleware enabled (distributed tracing)")
 
-    # CORS Configuration
-    # CORS Configuration
+    # Rate limiter
+    fastapi_app.add_middleware(RateLimiterMiddleware, calls=100, period=60)
+
+    # CORS al final (para que corra primero)
     cors_origins = os.getenv("CORS_ORIGINS", "http://localhost:5500").split(",")
     fastapi_app.add_middleware(
         CORSMiddleware,
-        allow_origins=cors_origins,
+        allow_origins=[o.strip() for o in cors_origins],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
