@@ -1,10 +1,7 @@
-from typing import Optional, TYPE_CHECKING
+from typing import Optional
 from pydantic import Field
 
 from schemas.base_schema import BaseSchema
-
-if TYPE_CHECKING:
-    from schemas.product_schema import ProductSchema
 
 
 class ReviewSchema(BaseSchema):
@@ -28,5 +25,3 @@ class ReviewSchema(BaseSchema):
         ...,
         description="Product ID reference (required)"
     )
-
-    product: Optional['ProductSchema'] = None
