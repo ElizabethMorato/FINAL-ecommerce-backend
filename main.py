@@ -91,7 +91,7 @@ def create_fastapi_app() -> FastAPI:
     # Rate limiter
     fastapi_app.add_middleware(RateLimiterMiddleware, calls=100, period=60)
 
-# CORS - abierto para todos los origenes
+    # CORS - abierto para todos los origenes
     fastapi_app.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],
