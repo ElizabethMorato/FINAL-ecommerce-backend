@@ -91,21 +91,14 @@ def create_fastapi_app() -> FastAPI:
     # Rate limiter
     fastapi_app.add_middleware(RateLimiterMiddleware, calls=100, period=60)
 
-    # CORS al final (para que corra primero)
-    cors_origins = os.getenv("CORS_ORIGINS", "http://localhost:5500").split(",")
+# CORS - abierto para todos los origenes
     fastapi_app.add_middleware(
         CORSMiddleware,
-        allow_origins=[o.strip() for o in cors_origins],
-        allow_credentials=True,
+        allow_origins=["*"],
+        allow_credentials=False,
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    logger.info(f"✅ CORS enabled for origins: {cors_origins}")
-
-    # Rate limiting: 100 requests per 60 seconds per IP (configurable via env)
-    fastapi_app.add_middleware(RateLimiterMiddleware, calls=100, period=60)
-    logger.info("✅ Rate limiting enabled: 100 requests/60s per IP")
-
     # Startup event: Check Redis connection
     @fastapi_app.on_event("startup")
     async def startup_event():
