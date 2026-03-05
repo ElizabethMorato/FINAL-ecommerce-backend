@@ -1,12 +1,8 @@
 """Product schema for request/response validation."""
-from typing import Optional, List, TYPE_CHECKING
+from typing import Optional
 from pydantic import Field
 
 from schemas.base_schema import BaseSchema
-
-if TYPE_CHECKING:
-    from schemas.order_detail_schema import OrderDetailSchema
-    from schemas.review_schema import ReviewSchema
 
 
 class ProductSchema(BaseSchema):
@@ -19,7 +15,3 @@ class ProductSchema(BaseSchema):
     image_url: Optional[str] = Field(default=None, description="Product image URL (optional)")
     description: Optional[str] = Field(default=None, max_length=2000, description="Product description (optional)")
     color: Optional[str] = Field(default=None, max_length=100, description="Product color (optional)")
-
-    # Removido: category 
-    reviews: Optional[List['ReviewSchema']] = []
-    order_details: Optional[List['OrderDetailSchema']] = []
